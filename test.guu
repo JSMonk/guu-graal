@@ -1,0 +1,5 @@
+sub main:
+    set a "Hello, World"
+    set b a
+    print b
+

@@ -1,0 +1,65 @@
+options {
+    CACHE_TOKENS = true;
+    SUPPORT_CLASS_VISIBILITY_PUBLIC = false;
+    UNICODE_INPUT = true;
+    JAVA_TEMPLATE_TYPE = "modern";
+}
+
+PARSER_BEGIN(GuuParserImpl)
+
+package guulang.parser;
+
+class GuuParserImpl extends GuuParser {}
+
+PARSER_END(GuuParserImpl)
+
+TOKEN_MGR_DECLS: {
+
+}
+SKIP: {
+    " " | "\n" | "\t" | "\r"
+}
+
+TOKEN: {
+        <INT: <NUMBER>>
+    |   <#NUMBER: ("-")? (<DIGITS>)>
+    |   <#DIGITS: (["0"-"9"])+>
+}
+
+TOKEN: {
+    <STRING: "\"" ( ~["\""] )* "\"">
+}
+
+TOKEN: {
+        <PROCEDURE: "sub">
+    |   <CALL: "call">
+    |   <SET: "set">
+    |   <PRINT: "print">
+}
+
+TOKEN: {
+    <IDENTIFIER: (["a"-"z", "A"-"Z"])(["a"-"z", "A"-"Z", "0"-"9", "_"])* >
+}
+
+SKIP: { "#":COMMENT }
+<COMMENT>
+SKIP: {
+        "\n":DEFAULT
+    |   <~[]>
+}
+
+protected void Program(): {} { (ProcedureDeclaration())+ <EOF> }
+private void ProcedureDeclaration() : {} {
+    <PROCEDURE>
+    Identifier()
+    Block() {getBuilder().endProcedureDeclaration();}
+}
+private void Identifier(): {} { <IDENTIFIER> {getBuilder().pushIdentifier();} }
+private void Block(): {} { ":" (Statement())+ }
+private void Statement(): {} { Assignment() | Call() | Print() }
+private void Assignment(): {} { <SET> (Identifier()) (Expression()) {getBuilder().pushAssignmentStatement();} }
+private void Expression(): {} { IntLiteral() | StringLiteral() | Identifier() }
+private void IntLiteral(): {} { <INT> {getBuilder().pushIntLiteral();} }
+private void StringLiteral(): {} { <STRING> {getBuilder().pushStringLiteral();} }
+private void Call(): {} { <CALL> (Identifier()) {getBuilder().pushCallStatement();} }
+private void Print(): {} { <PRINT> (Expression()) {getBuilder().pushPrintStatement();} }
