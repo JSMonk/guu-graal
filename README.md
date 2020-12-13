@@ -6,7 +6,10 @@ Guu program is a collection of procedures. Every procedure begins with the `sub`
 A procedure body is an instructions sequence. At the start of a line can be any count of spaces and tabs. Empty lines should be ignored.
 Guu has a one line comment blocks with `#` symbol.
 
-Guu has only three statements: - `set (varname) (new value)` - set a new value to variable. - `call (subname)` - call a procedure (calls can be recursive). - `print (varname)` - print a value of variable.
+Guu has only three statements:
+- `set (varname) (new value)` - set a new value to variable. 
+- `call (subname)` - call a procedure (calls can be recursive).
+- `print (varname)` - print a value of variable.
 
 Variables in Guu language exist only in the global scope. So, the next program will print `2`: 
 
