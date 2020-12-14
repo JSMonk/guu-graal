@@ -1,5 +1,9 @@
+# this is `main` procedure
 sub main:
-    set a "Hello, World"
-    set b a
-    print b
+   set a 1  # create `a` variable
+   call foo # call procedure
+   print a  # print expression
 
+# this is procedure which is called in `main` procedure
+sub foo:
+   set a 2  # assign 2 as `a` variable value
