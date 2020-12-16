@@ -12,7 +12,7 @@ public class CallStatement extends GuuStatement {
     @Override
     public void executeVoid(VirtualFrame frame) {
         var callTarget = procedureIdentifier.execute(frame);
-        callTarget.getRootNode().execute(frame);
+        callTarget.call();
     }
 
     public static CallStatement create(ProcedureIdentifierNode procedureIdentifier) {

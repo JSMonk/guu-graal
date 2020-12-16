@@ -36,7 +36,10 @@ public class GuuAstBuilder {
         var globalScope = currentExecutionContext.getGlobalScope();
         var procedureRegistry = currentExecutionContext.getProcedureRegistry();
         var rootNode = GuuRootNode.create(language, globalScope.getFrameDescriptor(), blockNode);
-        procedureRegistry.register(identifier.getIdentifier(), Truffle.getRuntime().createCallTarget(rootNode));
+        var runtime = Truffle.getRuntime();
+        var callTarget = runtime.createCallTarget(rootNode);
+        var directCallNode = runtime.createDirectCallNode(callTarget);
+        procedureRegistry.register(identifier.getIdentifier(), directCallNode.getCallTarget());
     }
 
     public void pushIdentifier() {

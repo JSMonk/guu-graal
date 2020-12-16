@@ -1,7 +1,7 @@
 package guulang.nodes;
 
 import com.oracle.truffle.api.CompilerDirectives;
-import com.oracle.truffle.api.RootCallTarget;
+import com.oracle.truffle.api.CallTarget;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import guulang.exceptions.ProcedureNotFoundException;
 import guulang.runtime.GuuProcedureRegistry;
@@ -19,7 +19,7 @@ public class ProcedureIdentifierNode extends GuuExpression {
     }
 
     @Override
-    public RootCallTarget execute(VirtualFrame frame) {
+    public CallTarget execute(VirtualFrame frame) {
         var existedCallTarget = procedureRegistry.lookup(identifier, this);
         if (existedCallTarget == null) {
             CompilerDirectives.transferToInterpreter();
