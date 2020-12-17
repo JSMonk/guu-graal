@@ -1,8 +1,5 @@
 package guulang;
 
-import guulang.exceptions.ProcedureNotFoundException;
-import guulang.exceptions.VariableNotFoundException;
-import guulang.parser.ParseException;
 import guulang.runtime.REPL;
 import org.graalvm.polyglot.Context;
 import org.graalvm.polyglot.PolyglotException;

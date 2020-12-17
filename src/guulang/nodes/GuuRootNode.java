@@ -8,8 +8,7 @@ import guulang.GuuLang;
 
 @NodeInfo(description = "The root of all Guu execution tree.")
 public class GuuRootNode extends RootNode {
-    @Child
-    private GuuNode body;
+    @Child private GuuNode body;
 
     protected GuuRootNode(GuuLang lang, FrameDescriptor frameDescriptor, GuuNode body) {
         super(lang, frameDescriptor);

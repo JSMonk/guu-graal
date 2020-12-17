@@ -7,8 +7,8 @@ import guulang.exceptions.ProcedureNotFoundException;
 import guulang.runtime.GuuProcedureRegistry;
 
 public class ProcedureIdentifierNode extends GuuExpression {
-    private GuuProcedureRegistry procedureRegistry;
-    private String identifier;
+    private final GuuProcedureRegistry procedureRegistry;
+    private final String identifier;
 
     protected ProcedureIdentifierNode(
             GuuProcedureRegistry procedureRegistry,

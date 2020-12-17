@@ -3,7 +3,7 @@ package guulang.nodes;
 import com.oracle.truffle.api.frame.VirtualFrame;
 
 public class CallStatement extends GuuStatement {
-    private ProcedureIdentifierNode procedureIdentifier;
+    @Child private ProcedureIdentifierNode procedureIdentifier;
 
     protected CallStatement(ProcedureIdentifierNode procedureIdentifier) {
         this.procedureIdentifier = procedureIdentifier;

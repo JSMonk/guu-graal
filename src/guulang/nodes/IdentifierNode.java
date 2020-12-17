@@ -9,6 +9,9 @@ import com.oracle.truffle.api.frame.FrameDescriptor;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.NodeInfo;
 import guulang.GuuLang;
+import guulang.exceptions.VariableNotFoundException;
+
+import java.util.Objects;
 
 @NodeInfo(description = "Represents identifier in Guu lang.")
 @NodeField(name = "identifier", type = String.class)
@@ -39,6 +42,10 @@ public abstract class IdentifierNode extends GuuExpression {
         var ctx = GuuLang.getCurrentContext();
         var globalScope = ctx.getGlobalScope();
         var slot = getSlotForRead();
+        if (Objects.isNull(slot)) {
+            CompilerDirectives.transferToInterpreterAndInvalidate();
+            throw new VariableNotFoundException(getIdentifier(), this);
+        }
         if (!globalScope.isObject(slot)) {
             CompilerDirectives.transferToInterpreter();
             Object result = globalScope.getValue(slot);
@@ -51,6 +58,7 @@ public abstract class IdentifierNode extends GuuExpression {
     protected boolean isLong() {
         var ctx = GuuLang.getCurrentContext();
         var globalScope = ctx.getGlobalScope();
-        return globalScope.isLong(getSlotForRead());
+        var slot = getSlotForRead();
+        return slot != null && globalScope.isLong(slot);
     }
 }
